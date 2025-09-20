@@ -1,10 +1,13 @@
-<h1>this App.html</h1>
+<!-- These are all strcutural directives for header/router/footer -->
+<div class="app-container d-flex flex-column min-vh-100">
+  <!-- Header -->
+  <app-header></app-header>
 
-<nav>
-  <a routerLink="/products">Products</a>
-  <button (click)="auth.login()">Login</button>
-  <button (click)="auth.logout()">Logout</button>
-</nav>
+  <!-- Main content -->
+  <main class="flex-fill">
+    <router-outlet></router-outlet>
+  </main>
 
-
-<router-outlet></router-outlet>
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>

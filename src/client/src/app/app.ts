@@ -1,15 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthService } from './Authentication/services/auth.service';
+import { HeaderComponent } from "./components/header/header.component";
+import { FooterComponent } from "./components/footer/footer.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule], //import RouterModule
+  imports: [RouterModule, HeaderComponent, FooterComponent], //import RouterModule
   standalone: true,
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-    constructor(public auth: AuthService) {}
-  protected readonly title = signal('Client');
+    
 }
