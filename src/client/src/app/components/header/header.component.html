@@ -24,23 +24,9 @@
           <a class="btn btn-sm btn-outline-secondary me-1 text-white" routerLink="/registration">Register</a>
         }
         @if (authService.token) {
+          <span class="text-white me-2">{{ loggedInUser }}</span>
           <a class="p-2 link-light text-white text-decoration-none" href="javascript:void(0)" (click)="authService.logout()">Logout</a>
         }
-
-          <!-- If not logged in -->
-          <ng-template #guestLinks>
-            <a
-              class="btn btn-sm btn-outline-secondary me-1 text-white"
-              routerLink="/registration">
-              Register
-            </a>
-            <a
-              class="btn btn-sm btn-outline-secondary text-white"
-              routerLink="/login">
-              Log in
-            </a>
-          </ng-template>
-
           <!-- Cart always visible -->
           <a
             class="p-2 link-light text-white text-decoration-none"

@@ -36,4 +36,12 @@ export class AuthService {
   get token() {
     return this.oauthService.getAccessToken();
   }
+
+get name(): string | null {
+  return this.identityClaims ? this.identityClaims['name'] : null;
+}
+
+get email(): string | null {
+  return this.identityClaims ? this.identityClaims['email'] : null;
+}
 }
