@@ -1,0 +1,5 @@
+<h2>Products</h2>
+    @if (authService.token) {
+      <p>Access Token: {{ authService.token }}</p>
+      <p>Identity Claims: {{ authService.identityClaims | json }}</p>
+    }
