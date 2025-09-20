@@ -5,13 +5,18 @@
         
         <!-- Left side nav -->
         <div class="col-4 text-center">
-          <nav class="nav mx-auto fw-bold text-white">
+          <nav class="nav mx-auto text-white">
             <a
               class="p-2 link-light text-white text-decoration-none"
-              routerLink="/products"
+              routerLink="/"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }">
               Home
+            </a>
+            <a
+            class="p-2 link-light text-white text-decoration-none"
+            routerLink="/admin">
+            Admin
             </a>
           </nav>
         </div>

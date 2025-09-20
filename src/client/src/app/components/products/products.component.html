@@ -1,5 +1,21 @@
 <h2>Products</h2>
-    @if (authService.token) {
-      <p>Access Token: {{ authService.token }}</p>
-      <p>Identity Claims: {{ authService.identityClaims | json }}</p>
+@if (loading) {
+  <div>Loading products...</div>
+}
+
+@if (errorMessage) {
+  <div>{{ errorMessage }}</div>
+}
+
+@if (!loading && !errorMessage) {
+  <ul>
+    @for (product of products; track product.id)  {
+      <li>
+        <strong>{{ product.name }}</strong> - ${{ product.unitPrice }}
+      </li>
     }
+  </ul>
+}
+
+
+
