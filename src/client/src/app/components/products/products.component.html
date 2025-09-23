@@ -2,6 +2,13 @@
   <div>Loading products...</div>
 }
  <div class="container py-4">
+  	<section class="text-center container mt-3">
+		<div class="col-lg-4 mx-auto">
+			<div class="img-wrap">
+				<img class="img-fluid" src="https://media.istockphoto.com/id/475831000/photo/family-in-the-amusement-park.jpg?s=2048x2048&w=is&k=20&c=yIZvHy2YRqO79apERzbEGPECZ0atOkgmPsxLz7K1tZ8=">
+			</div>
+		</div>
+	</section>
     <h2 class="mb-4">Amazon Style Product List</h2>
     	<div class="row">
         @for (product of products; track product.id) {
@@ -16,8 +23,8 @@
                   <div class="price-wrap h6">
                     <span class="fs-5">${{ product.unitPrice }}</span> <br>
                     <del class="text-muted"></del>
-                  </div> <!-- price-wrap.// -->
-                </div> <!-- bottom-wrap.// -->
+                  </div>
+                </div>
               </div>
             </div>
           </div>
