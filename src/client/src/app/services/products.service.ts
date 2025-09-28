@@ -13,16 +13,21 @@ export class ProductsService {
   constructor(private http: HttpClient, private oauthService: AuthService) {}
 
   get token(): string {
-    return this.oauthService.token; // your getter
+    return this.oauthService.token;
   }
 
-    getAllProducts(): Observable<ProductResponse[]> {
+  getAllProducts(): Observable<ProductResponse[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.token}`
     });
 
     return this.http.get<ProductResponse[]>(`${this.baseUrl}/allproducts`, { headers });
   }
+
+  getProductById(id: string | null): Observable<ProductResponse> {
+    return this.http.get<ProductResponse>(`${this.baseUrl}/getproduct?id=${id}`);
+  }
+
 }
 
 

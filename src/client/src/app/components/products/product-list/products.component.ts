@@ -3,6 +3,7 @@ import { AuthService } from '../../../Authentication/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ProductsService } from '../../../services/products.service';
 import { ProductResponse } from '../../../services/ProductResponse';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -17,7 +18,8 @@ export class ProductsComponent {
   loading = true;
   errorMessage = '';
   constructor(public authService: AuthService,
-              private productsService: ProductsService
+              private productsService: ProductsService,
+              private router: Router
             ) {  }
 
   ngOnInit(): void {
@@ -32,5 +34,11 @@ export class ProductsComponent {
           console.error(err);
         },
       });
+  }
+
+  //grabs the id from product list
+  goToProductDetails(productId: string){
+    //send this to product details component
+    this.router.navigate(['/product', productId]);
   }
 }

@@ -1,7 +1,7 @@
 import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { routes } from './app.routes';
+import { routes } from './Routing/app.routes';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { provideHttpClient } from '@angular/common/http';
 
