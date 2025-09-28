@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../Authentication/services/auth.service';
+import { AuthService } from '../../../Authentication/services/auth.service';
 import { CommonModule } from '@angular/common';
-import { ProductsService } from '../../services/products.service';
-import { ProductResponse } from '../../services/ProductResponse';
+import { ProductsService } from '../../../services/products.service';
+import { ProductResponse } from '../../../services/ProductResponse';
 
 @Component({
   selector: 'app-products',

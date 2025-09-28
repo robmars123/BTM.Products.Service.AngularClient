@@ -13,11 +13,13 @@
               [routerLinkActiveOptions]="{ exact: true }">
               Home
             </a>
+          @if (authService.token) {
             <a
             class="p-2 link-light text-white text-decoration-none"
             routerLink="/admin">
             Admin
             </a>
+          }
           </nav>
         </div>
 

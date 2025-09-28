@@ -8,7 +8,7 @@ import { ProductResponse } from './ProductResponse';
   providedIn: 'root'
 })
 export class ProductsService {
-  private baseUrl = 'https://localhost:7119/api'; // replace with your API base URL
+  private baseUrl = 'https://localhost:5003/api'; // replace with your API base URL
 
   constructor(private http: HttpClient, private oauthService: AuthService) {}
 

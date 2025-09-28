@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterModule, NgClass], //import RouterModule
+  imports: [RouterModule], //import RouterModule
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
