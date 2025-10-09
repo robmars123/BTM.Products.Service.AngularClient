@@ -28,6 +28,17 @@ export class ProductsService {
     return this.http.get<ProductResponse>(`${this.baseUrl}/getproduct?id=${id}`);
   }
 
+  addProduct(product: ProductResponse): Observable<ProductResponse> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    });
+
+    return this.http.post<ProductResponse>(
+      `${this.baseUrl}/addproduct`,
+      product,
+      { headers }
+    );
+  }
 }
 
 

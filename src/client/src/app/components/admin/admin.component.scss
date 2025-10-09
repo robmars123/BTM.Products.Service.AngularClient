@@ -1,0 +1,59 @@
+.row {
+    display: flex;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    font-size: 12px;
+}
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.column {
+    flex: 50%;
+}
+.content{
+    height: 450px;
+}
+
+.content-add-product {
+    /*height: 240px;*/
+}
+.searchProduct input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+}
+
+.searchProduct button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #909090;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+}
+
+    .searchProduct button:hover {
+        background: #2e2c2c
+    }
+
+.searchProduct::after {
+    content: "";
+    clear: both;
+    display: table;
+}

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../../Authentication/services/auth.service';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../Authentication/services/auth.service';
 import { ProductsService } from '../../../services/products.service';
 import { ProductResponse } from '../../../services/ProductResponse';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -14,31 +14,31 @@ import { Router } from '@angular/router';
 })
 export class ProductsComponent {
 
-  products: ProductResponse[] = [];
-  loading = true;
-  errorMessage = '';
-  constructor(public authService: AuthService,
-              private productsService: ProductsService,
-              private router: Router
-            ) {  }
+  products = signal<ProductResponse[]>([]);
+  loading = signal(true);
+  errorMessage = signal('');
+
+  constructor(
+    public authService: AuthService,
+    private productsService: ProductsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-      this.productsService.getAllProducts().subscribe({
-        next: (data) => {
-          this.products = data;
-          this.loading = false;
-        },
-        error: (err) => {
-          this.errorMessage = 'Failed to load products';
-          this.loading = false;
-          console.error(err);
-        },
-      });
+    this.productsService.getAllProducts().subscribe({
+      next: (data) => {
+        this.products.set(data);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMessage.set('Failed to load products');
+        this.loading.set(false);
+      },
+    });
   }
 
-  //grabs the id from product list
-  goToProductDetails(productId: string){
-    //send this to product details component
+  goToProductDetails(productId: string) {
     this.router.navigate(['/product', productId]);
   }
 }

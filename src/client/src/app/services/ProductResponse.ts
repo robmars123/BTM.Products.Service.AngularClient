@@ -1,6 +1,6 @@
 
-export interface ProductResponse {
-  id: string;
-  name: string;
-  unitPrice: number;
+export class ProductResponse {
+  id: string = '';
+  name: string = '';
+  unitPrice: number = 0;
 }

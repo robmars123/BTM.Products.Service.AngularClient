@@ -4,6 +4,7 @@ import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
 const authConfig: AuthConfig = {
   issuer: 'https://localhost:5001', // IdentityServer authority
   redirectUri: window.location.origin,
+  requireHttps: false, 
   clientId: 'angular-client',
   responseType: 'code',
   scope: 'openid profile ProductsAPI.fullaccess',
