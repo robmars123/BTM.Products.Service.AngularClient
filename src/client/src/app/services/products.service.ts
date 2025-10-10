@@ -16,12 +16,14 @@ export class ProductsService {
     return this.oauthService.token;
   }
 
-  getAllProducts(): Observable<ProductResponse[]> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`
-    });
+  private get headers(): HttpHeaders {
+    return new HttpHeaders({ Authorization: `Bearer ${this.token}` });
+  }
 
-    return this.http.get<ProductResponse[]>(`${this.baseUrl}/allproducts`, { headers });
+  getPagedProducts(page: number, pageSize = 10): Observable<ProductResponse[]> {
+    return this.http.get<ProductResponse[]>(`${this.baseUrl}/getPagedProducts?page=${page}&pageSize=${pageSize}`, {
+      headers: this.headers,
+    });
   }
 
   getProductById(id: string | null): Observable<ProductResponse> {
@@ -29,14 +31,10 @@ export class ProductsService {
   }
 
   addProduct(product: ProductResponse): Observable<ProductResponse> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`
-    });
-
     return this.http.post<ProductResponse>(
       `${this.baseUrl}/addproduct`,
       product,
-      { headers }
+      { headers: this.headers }
     );
   }
 }
