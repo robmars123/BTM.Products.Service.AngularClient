@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ProductResponse } from '../../../services/ProductResponse';
 import { ActivatedRoute } from '@angular/router';
-import { ProductsService } from '../../../services/products.service';
+import { ProductResponse } from '../../../../Core/services/ProductResponse';
+import { ProductsService } from '../../../../Core/services/products.service';
 
 @Component({
   selector: 'app-product-details',

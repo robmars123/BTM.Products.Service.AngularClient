@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
-import { AuthService } from '../Authentication/services/auth.service';
+import { Observable } from 'rxjs';
 import { ProductResponse } from './ProductResponse';
+import { AuthService } from '../Authentication/services/auth.service';
+import { PagedResponse } from '../../Shared/Models/paged-response';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,8 @@ export class ProductsService {
     return new HttpHeaders({ Authorization: `Bearer ${this.token}` });
   }
 
-  getPagedProducts(page: number, pageSize = 10): Observable<ProductResponse[]> {
-    return this.http.get<ProductResponse[]>(`${this.baseUrl}/getPagedProducts?page=${page}&pageSize=${pageSize}`, {
+  getPagedProducts(page: number, pageSize = 10): Observable<PagedResponse<ProductResponse>> {
+    return this.http.get<PagedResponse<ProductResponse>>(`${this.baseUrl}/getPagedProducts?page=${page}&pageSize=${pageSize}`, {
       headers: this.headers,
     });
   }

@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
-import { AuthService } from '../../Authentication/services/auth.service';
-import { NgClass } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../Core/Authentication/services/auth.service';
 
 @Component({
   selector: 'app-header',

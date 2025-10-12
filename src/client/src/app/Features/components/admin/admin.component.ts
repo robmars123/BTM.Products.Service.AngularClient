@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ProductResponse } from '../../services/ProductResponse';
-import { ProductsService } from '../../services/products.service';
+import { ProductResponse } from '../../../Core/services/ProductResponse';
+import { ProductsService } from '../../../Core/services/products.service';
 
 @Component({
   selector: 'app-admin',

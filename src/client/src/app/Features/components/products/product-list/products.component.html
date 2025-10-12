@@ -1,5 +1,6 @@
-@if (loading()) {
-    <div class="spinner-container">
+@if (products().length === 0 && loading()) {
+  <!-- show spinner only on first load -->
+  <div class="spinner-container">
     <div class="spinner"></div>
     <p>Loading products...</p>
   </div>
@@ -18,9 +19,9 @@
 
     <div class="mb-5"></div>
 
+    <!-- product grid -->
     <div class="row">
       @for (product of products(); track product.id) {
-        <!-- product cards -->
         <div class="col-md-3">
           <div
             class="row d-flex justify-content-center g-1"
@@ -37,7 +38,6 @@
                 <h5 class="fs-6">{{ product.name }}</h5>
                 <div class="price-wrap h6">
                   <span class="fs-5">${{ product.unitPrice }}</span><br />
-                  <del class="text-muted"></del>
                 </div>
               </div>
             </div>
@@ -45,5 +45,25 @@
         </div>
       }
     </div>
+<!-- pagination -->
+    @if (totalPages > 1) {
+  <nav class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="page === 1">
+        <a class="page-link" (click)="changePage(page - 1)">Prev</a>
+      </li>
+
+      @for (num of visiblePages(); track num) {
+        <li class="page-item" [class.active]="page === num">
+          <a class="page-link" (click)="changePage(num)">{{ num }}</a>
+        </li>
+      }
+
+      <li class="page-item" [class.disabled]="page === totalPages">
+        <a class="page-link" (click)="changePage(page + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+}
   </div>
 }
