@@ -47,23 +47,23 @@
     </div>
 <!-- pagination -->
     @if (totalPages > 1) {
-  <nav class="mt-4">
-    <ul class="pagination justify-content-center">
-      <li class="page-item" [class.disabled]="page === 1">
-        <a class="page-link" (click)="changePage(page - 1)">Prev</a>
-      </li>
-
-      @for (num of visiblePages(); track num) {
+    <nav class="mt-4">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="page === 1">
+          <a class="page-link" (click)="changePage(page - 1)">Prev</a>
+        </li>
+    
+        @for (num of visiblePages(); track num) {
         <li class="page-item" [class.active]="page === num">
           <a class="page-link" (click)="changePage(num)">{{ num }}</a>
         </li>
-      }
-
-      <li class="page-item" [class.disabled]="page === totalPages">
-        <a class="page-link" (click)="changePage(page + 1)">Next</a>
-      </li>
-    </ul>
-  </nav>
-}
+        }
+    
+        <li class="page-item" [class.disabled]="page === totalPages">
+          <a class="page-link" (click)="changePage(page + 1)">Next</a>
+        </li>
+      </ul>
+    </nav>
+    }
   </div>
 }
