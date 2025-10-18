@@ -10,15 +10,19 @@ import { ProductsService } from '../../../Core/services/products.service';
   providers: [CurrencyPipe],
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './admin.component.html',
-  styleUrl: './admin.component.scss'
+  styleUrl: './admin.component.scss',
 })
 export class AdminComponent {
-  product: ProductModel | undefined;
-  productForm!: FormGroup;
+  addProductModel: ProductModel | undefined;
+  updateProductModel: ProductModel | undefined;
+
+  addProductForm!: FormGroup;
+  updateProductForm!: FormGroup;
   searchForm!: FormGroup;
 
   returnMessage: string = '';
-  successMessage: string = '';
+  addSuccessMessage: string = '';
+  updateSuccessMessage: string = '';
   SearchReturnMessage: string = '';
 
   uploadedFile: File | null = null;
@@ -33,9 +37,10 @@ export class AdminComponent {
   totalPages = 1;
   allLoaded = false;
 
-  constructor(private fb: FormBuilder,
-                  private productsService: ProductsService,
-                  private currencyPipe: CurrencyPipe
+  constructor(
+    private fb: FormBuilder,
+    private productsService: ProductsService,
+    private currencyPipe: CurrencyPipe
   ) {}
 
   ngOnInit(): void {
@@ -51,9 +56,9 @@ export class AdminComponent {
         if (data.totalCount === 0) {
           this.allLoaded = true; // no more pages
         } else {
-        this.products.set(data.items);
-        this.totalPages = Math.ceil(data.totalCount / this.pageSize);
-        this.loading.set(false);
+          this.products.set(data.items);
+          this.totalPages = Math.ceil(data.totalCount / this.pageSize);
+          this.loading.set(false);
         }
         this.loading.set(false);
       },
@@ -70,36 +75,77 @@ export class AdminComponent {
       keyword: [''],
     });
 
-    this.productForm = this.fb.group({
+    //Add Product form
+    this.addProductForm = this.fb.group({
       name: ['', Validators.required],
       unitPrice: [0, [Validators.required, Validators.min(0.01)]],
     });
+
+    //Update Product form
+    this.updateProductForm = this.fb.group({
+      id: [''],
+      name: ['', Validators.required],
+      unitPrice: [0, [Validators.required, Validators.min(0.01)]],
+      isDeleted: [false],
+    });
   }
 
-onSubmit(): void {
-  if (!this.productForm.valid) return;
+  addProduct(): void {
+    if (!this.addProductForm.valid) return;
 
-  const { id, name, unitPrice } = this.productForm.value;
-  const productRequest: ProductModel = { id, name, unitPrice };
+    const { id, name, unitPrice, isDeleted } = this.addProductForm.value;
+    const productRequest: ProductModel = { id, name, unitPrice, isDeleted };
 
-  this.productsService.addProduct(productRequest).subscribe({
-    next: (data: ProductModel) => {
-      this.product = data;
-      this.successMessage = 'Product successfully added!';
+    this.productsService.addProduct(productRequest).subscribe({
+      next: (data: ProductModel) => {
+        this.addProductModel = data;
+        this.addSuccessMessage = 'Product successfully added!';
 
-      //Refresh
-      this.loadProducts();
-    },
-    error: (err: any) => {
-      this.errorMessage.set('Failed to load products');
-      console.error('Add Product Error:', err);
-    },
-  });
-}
+        //Refresh
+        this.loadProducts();
+      },
+      error: (err: any) => {
+        this.errorMessage.set('Failed to load products');
+        console.error('Add Product Error:', err);
+      },
+    });
+  }
 
-format(value: number) {
-  return this.currencyPipe.transform(value, 'USD', 'symbol', '1.2-2');
-}
+  updateProduct(): void {
+    if (!this.updateProductForm.valid) return;
+
+    const { id, name, unitPrice, isDeleted } = this.updateProductForm.value;
+
+    const productRequest: ProductModel = {
+      id,
+      name,
+      unitPrice,
+      isDeleted,
+    };
+
+    this.productsService.updateProduct(productRequest).subscribe({
+      next: (data: ProductModel) => {
+        this.updateProductModel = data;
+        this.updateSuccessMessage = 'Product successfully updated!';
+
+        //Refresh
+        this.loadProducts();
+
+        //clear current selection
+        this.initializeForm();
+        this.updateProductModel = undefined;
+        this.updateSuccessMessage = '';
+      },
+      error: (err: any) => {
+        this.errorMessage.set('Failed to load product');
+        console.error('Update Product Error:', err);
+      },
+    });
+  }
+
+  format(value: number) {
+    return this.currencyPipe.transform(value, 'USD', 'symbol', '1.2-2');
+  }
 
   changePage(pageNumber: number) {
     if (pageNumber < 1 || pageNumber > this.totalPages) return;
@@ -130,12 +176,25 @@ format(value: number) {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   }
 
-  onFileChange($event: Event) {
-  
+  selectProduct(id: string) {
+    const product = this.products().find((p) => p.id === id);
+    if (!product) return;
+
+    this.updateProductModel = product;
+
+    this.updateProductForm.setValue({
+      id: product.id,
+      name: product.name,
+      unitPrice: product.unitPrice,
+      isDeleted: product.isDeleted ?? false,
+    });
   }
-  onSearch() {
 
+  delete_Click(id: string) {
+    // let product = this.products().find((p) => p.id === id);
+    // this.updateProduct = product;
   }
 
-
+  onFileChange($event: Event) {}
+  onSearch() {}
 }

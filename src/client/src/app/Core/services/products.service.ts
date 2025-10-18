@@ -6,7 +6,7 @@ import { AuthService } from '../Authentication/services/auth.service';
 import { PagedResponse } from '../../Shared/Models/paged-response';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
   //private baseUrl = 'https://localhost:5003/api'; // products api - docker
@@ -23,9 +23,12 @@ export class ProductsService {
   }
 
   getPagedProducts(page: number, pageSize = 10): Observable<PagedResponse<ProductModel>> {
-    return this.http.get<PagedResponse<ProductModel>>(`${this.productUrl}/getPagedProducts?page=${page}&pageSize=${pageSize}`, {
-      headers: this.headers,
-    });
+    return this.http.get<PagedResponse<ProductModel>>(
+      `${this.productUrl}/getPagedProducts?page=${page}&pageSize=${pageSize}`,
+      {
+        headers: this.headers,
+      }
+    );
   }
 
   getProductById(id: string | null): Observable<ProductModel> {
@@ -39,6 +42,12 @@ export class ProductsService {
       withCredentials: true,
     });
   }
+
+  updateProduct(product: ProductModel): Observable<ProductModel> {
+    console.log('Token:', this.token);
+    return this.http.put<ProductModel>(`${this.productUrl}/updateproduct`, product, {
+      headers: this.headers,
+      withCredentials: true,
+    });
+  }
 }
-
-
