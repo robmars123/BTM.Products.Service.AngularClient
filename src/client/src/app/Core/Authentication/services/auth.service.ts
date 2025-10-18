@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
 
 const authConfig: AuthConfig = {
-  issuer: 'https://localhost:5001', // IdentityServer authority
+  issuer: 'https://localhost:5001', // IdentityServer authority accessed outside docker
   redirectUri: window.location.origin,
   requireHttps: false, 
   clientId: 'angular-client',

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductResponse } from './ProductResponse';
+import { ProductModel } from './ProductModel';
 import { AuthService } from '../Authentication/services/auth.service';
 import { PagedResponse } from '../../Shared/Models/paged-response';
 
@@ -9,7 +9,8 @@ import { PagedResponse } from '../../Shared/Models/paged-response';
   providedIn: 'root'
 })
 export class ProductsService {
-  private baseUrl = 'https://localhost:5003/api'; // replace with your API base URL
+  //private baseUrl = 'https://localhost:5003/api'; // products api - docker
+  private productUrl = 'https://localhost:7119/api'; //running htts locally
 
   constructor(private http: HttpClient, private oauthService: AuthService) {}
 
@@ -21,22 +22,22 @@ export class ProductsService {
     return new HttpHeaders({ Authorization: `Bearer ${this.token}` });
   }
 
-  getPagedProducts(page: number, pageSize = 10): Observable<PagedResponse<ProductResponse>> {
-    return this.http.get<PagedResponse<ProductResponse>>(`${this.baseUrl}/getPagedProducts?page=${page}&pageSize=${pageSize}`, {
+  getPagedProducts(page: number, pageSize = 10): Observable<PagedResponse<ProductModel>> {
+    return this.http.get<PagedResponse<ProductModel>>(`${this.productUrl}/getPagedProducts?page=${page}&pageSize=${pageSize}`, {
       headers: this.headers,
     });
   }
 
-  getProductById(id: string | null): Observable<ProductResponse> {
-    return this.http.get<ProductResponse>(`${this.baseUrl}/getproduct?id=${id}`);
+  getProductById(id: string | null): Observable<ProductModel> {
+    return this.http.get<ProductModel>(`${this.productUrl}/getproduct?id=${id}`);
   }
 
-  addProduct(product: ProductResponse): Observable<ProductResponse> {
-    return this.http.post<ProductResponse>(
-      `${this.baseUrl}/addproduct`,
-      product,
-      { headers: this.headers }
-    );
+  addProduct(product: ProductModel): Observable<ProductModel> {
+    console.log('Token:', this.token);
+    return this.http.post<ProductModel>(`${this.productUrl}/addproduct`, product, {
+      headers: this.headers,
+      withCredentials: true,
+    });
   }
 }
 

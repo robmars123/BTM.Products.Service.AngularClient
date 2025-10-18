@@ -2,7 +2,7 @@ import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../Core/Authentication/services/auth.service';
-import { ProductResponse } from '../../../../Core/services/ProductResponse';
+import { ProductModel } from '../../../../Core/services/ProductModel';
 import { ProductsService } from '../../../../Core/services/products.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { ProductsService } from '../../../../Core/services/products.service';
   styleUrl: './products.component.scss',
 })
 export class ProductsComponent {
-  products = signal<ProductResponse[]>([]);
+  products = signal<ProductModel[]>([]);
   loading = signal(true);
   errorMessage = signal('');
 

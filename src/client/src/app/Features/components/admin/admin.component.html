@@ -1,4 +1,4 @@
-@if (products && products.length === 0) {
+@if (products() && products.length === 0) {
   <div class="text-muted">No products found.</div>
 }
 <!-- Search Section -->
@@ -22,7 +22,8 @@
   </div>
 </section>
 <!-- Add Product Section -->
-	<div class="border p-3 mb-3 shadow-sm">
+<div class="border p-3 mb-3 shadow-sm">
+
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
     <h6>Add Product</h6>
     <hr />
@@ -57,7 +58,7 @@
           placeholder="0.00"
           formControlName="unitPrice"
         />
-        @if (productForm.get('unitPrice')?.invalid && productForm.get('unitPrice')?.touched) {
+        @if (productForm && productForm.get('unitPrice')?.invalid && productForm.get('unitPrice')?.touched) {
           <small class="text-danger">Price must be greater than 0.</small>
         }
       </div>
@@ -90,6 +91,7 @@
       </div>
     </div>
   </form>
+
 </div>
 
 <!-- Display products -->
@@ -102,24 +104,18 @@
 							<table class="table col-12 table-striped">
 								<thead>
 									<tr>
-										<th class="col-sm-2">Product Id</th>
 										<th class="col">Product Name</th>
 										<th class="col">Product Price</th>
-										<th class="col">Description</th>
-										<th class="col">Date Added</th>
-										<th class="col"></th>
-										<th class="col"></th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									@for(product of products; track product.id)
+									@for(product of products(); track product.id)
 									{
 										<tr>
-											<td>@product.Product_Id</td>
-											<td>@product.Product_Name</td>
-											<td>$@Math.Round((decimal)@product.Price, 2)</td>
-											<td>@product.Description</td>
-											<td>@product.Date_Added</td>
+											<td> {{ product.name }} </td>
+											<td>${{ product.unitPrice | currency:'1.2-2' }}</td>
 											<td>
 												<!-- <button class="btn btn-secondary" type="button" @onclick="() => SelectProduct(product.Product_Id)">
 													Modify
@@ -136,9 +132,29 @@
 							</table>
 						</div>
 					
+						<!-- pagination -->
+					@if (totalPages > 1) {
+					<nav class="mt-4">
+						<ul class="pagination justify-content-center">
+							<li class="page-item" [class.disabled]="page === 1">
+								<a class="page-link" (click)="changePage(page - 1)">Prev</a>
+							</li>
+					
+							@for (num of visiblePages(); track num) {
+							<li class="page-item" [class.active]="page === num">
+								<a class="page-link" (click)="changePage(num)">{{ num }}</a>
+							</li>
+							}
+					
+							<li class="page-item" [class.disabled]="page === totalPages">
+								<a class="page-link" (click)="changePage(page + 1)">Next</a>
+							</li>
+						</ul>
+					</nav>
+					}
+					</div>
 					<span>{{SearchReturnMessage}}</span>
 				</div>
-			</div>
 		</div>
 		<!-- Second Column -->
 		<div class="col col-5 border h-100 overflow-hidden p-4 content m-auto shadow-sm me-2">
