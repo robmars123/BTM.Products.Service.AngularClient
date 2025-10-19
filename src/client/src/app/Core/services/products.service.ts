@@ -50,4 +50,12 @@ export class ProductsService {
       withCredentials: true,
     });
   }
+
+  deleteProduct(id: string): Observable<ProductModel> {
+    console.log('Token:', this.token);
+    return this.http.delete<ProductModel>(`${this.productUrl}/removeproduct?id=${id}`, {
+      headers: this.headers,
+      withCredentials: true,
+    });
+  }
 }

@@ -21,8 +21,9 @@ export class AdminComponent {
   searchForm!: FormGroup;
 
   returnMessage: string = '';
-  addSuccessMessage: string = '';
-  updateSuccessMessage: string = '';
+  addSuccessMessage: string | undefined = '';
+  updateSuccessMessage: string | undefined = '';
+  deleteSuccessMessage: string | undefined= '';
   SearchReturnMessage: string = '';
 
   uploadedFile: File | null = null;
@@ -143,6 +144,23 @@ export class AdminComponent {
     });
   }
 
+  deleteProduct(id: string): void {
+    this.productsService.deleteProduct(id).subscribe({
+      next: (data: ProductModel) => {
+        this.deleteSuccessMessage = 'Product successfully deleted!';
+
+        //Refresh
+        this.loadProducts();
+        this.initializeForm();
+        this.updateProductModel = undefined;
+      },
+      error: (err: any) => {
+        this.errorMessage.set('Failed to load product');
+        console.error('Update Product Error:', err);
+      },
+    });
+  }
+
   format(value: number) {
     return this.currencyPipe.transform(value, 'USD', 'symbol', '1.2-2');
   }
@@ -188,6 +206,8 @@ export class AdminComponent {
       unitPrice: product.unitPrice,
       isDeleted: product.isDeleted ?? false,
     });
+
+    this.deleteSuccessMessage = undefined;
   }
 
   delete_Click(id: string) {
